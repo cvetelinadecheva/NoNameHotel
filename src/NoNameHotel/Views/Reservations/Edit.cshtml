@@ -1,0 +1,109 @@
+@model NoNameHotel.Models.Reservation
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="content">
+
+    <h2>Make reservation</h2>
+
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+            @if (ViewBag.Rooms != 0 && ViewBag.Rooms != null)
+            {
+                <h3>
+                    You have to choose @ViewBag.Rooms rooms.<br>
+                    Room @{int a = ViewBag.Rooms - ViewBag.NumOfRooms;}@a
+                </h3>
+                        }
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FromDate" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    @if (ViewBag.Rooms > 0)
+                    {
+                        <input asp-for="FromDate" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <input asp-for="FromDate" class="form-control" />
+                    }
+                    <span asp-validation-for="FromDate" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDate" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    @if (ViewBag.Rooms > 0)
+                    {
+                        <input asp-for="ToDate" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <input asp-for="ToDate" class="form-control" />
+                    }
+                    <span asp-validation-for="ToDate" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfAdults" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="NumberOfAdults" class="form-control">
+                        @for (int i = 1; i <= ViewBag.NumberOfAdults; i++)
+                        {
+                            <option>@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="NumberOfAdults" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfChildren" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="NumberOfChildren" class="form-control">
+
+                        @for (int i = 0; i <= ViewBag.NumberOfChildren; i++)
+                        {
+                            <option>@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="NumberOfChildren" class="text-danger" />
+                </div>
+            </div>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="Status" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="Status" class="form-control">
+                            <option>@Status.New</option>
+                            <option>@Status.Submitted</option>
+                            <option>@Status.Approved</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger" />
+                    </div>
+                </div>
+            }
+            <input type="hidden" asp-for="ClientId" class="form-control" />
+            <input type="hidden" asp-for="RoomId" class="form-control" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Next" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <a asp-action="Index">Back to List</a>
+        }
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</div>

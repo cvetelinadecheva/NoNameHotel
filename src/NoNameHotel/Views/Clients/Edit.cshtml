@@ -1,0 +1,67 @@
+@model NoNameHotel.Models.Client
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="content">
+@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+{
+    <h2>Edit client</h2>
+}
+else
+{
+    <h2>Client</h2>
+}
+
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+            <h4>Client</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Email" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelNumber" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="TelNumber" class="form-control" />
+                    <span asp-validation-for="TelNumber" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Next" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+                <a asp-action="Index">Back to List</a>
+        }
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</div>

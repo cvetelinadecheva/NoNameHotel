@@ -1,0 +1,59 @@
+@model IEnumerable<NoNameHotel.Models.Room>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="content">
+    <h2>Available rooms</h2>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumRoom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfAdults)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfChildren)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumRoom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfAdults)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfChildren)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @if (User.Identity.IsAuthenticated)
+                {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

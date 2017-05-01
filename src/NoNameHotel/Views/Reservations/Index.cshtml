@@ -1,0 +1,120 @@
+@model IEnumerable<NoNameHotel.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="content">
+    <h2>Reservations</h2>
+    <input type="button" class="btn btn-default" value="delete checked" onclick=getCheckedBoxes() />
+    <form asp-controller="Reservations" asp-action="Index" method="get">
+    Reservations :<select class="form-control" name="Reservations">
+                        <option>All</option>
+                        <option>Active</option>
+                  </select>
+
+        Month :<select class="form-control" name="Month">
+            <option>All</option>
+            @for (int i = 1; i < 13; i++)
+            {
+                <option>@i</option>
+            }
+        </select>
+        Room :<select class="form-control" name="Room">
+            <option>All</option>
+           @for (int i = 100; i < 108; i++)
+            {
+                <option>@i</option>
+            }
+        </select>
+        <input type="submit" value="Search" class="btn btn-default" />
+    </form>
+
+            <table class="table" id="table">
+                <thead>
+                    <tr><th>
+</th>
+                        <th>
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FromDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ToDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumberOfAdults)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumberOfChildren)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RoomId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Client)
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                <input type="checkbox" name="c">
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FromDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ToDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfAdults)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfChildren)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.RoomId)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.Client.FirstName)<br>
+                                @Html.DisplayFor(modelItem => item.Client.LastName)<br>
+                                @Html.DisplayFor(modelItem => item.Client.Email)<br>
+                                @Html.DisplayFor(modelItem => item.Client.TelNumber)
+                            </th>
+                            <td>
+                                <a asp-action="AdminEdit" asp-route-id="@item.Id">Edit</a><br>
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a><br>
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+</div>
+<script>
+    function getCheckedBoxes() {
+        var ischeck = document.getElementsByName("c");
+        var table = document.getElementById('table');
+        var checked = [];
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            if (ischeck[r - 1].checked)
+                checked.push(table.rows[r].cells[0].children[0].value);
+        }    
+        var msg = confirm("Are you sure you want to delete this!");
+        if (msg == true) 
+            window.location.href = '@Url.Action("DeleteChecked", "Reservations", new { ids = "checked" })'.replace("checked", checked);         
+    }
+</script>

@@ -1,0 +1,83 @@
+
+@model IEnumerable<NoNameHotel.Models.Category>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="content">
+    <h2>Rooms</h2>
+    <h3 style="color:red;">@ViewBag.Error</h3>
+    <p>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <a asp-action="Create">Create New</a>
+        }
+    </p>
+        <form class="1" id="1" asp-controller="Categories" asp-action="Index" method="get">
+            <div class="accomodation">
+                <div class="col-md-2 col-sm-12 col-xs-12">
+                    <h3>Accommodation:</h3>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    Start date:
+                    @if (ViewBag.Rooms != 0 && ViewBag.Rooms != null)
+                    {
+                        <input type="date" name="FromDate" class="form-control" value=@ViewBag.From.ToString("yyyy-MM-dd") required>
+                    }
+                    else
+                    {
+                        <input type="date" name="FromDate" class="form-control" required>
+                    }
+                 </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    End date:
+                    @if (ViewBag.Rooms != 0 && ViewBag.Rooms != null)
+                    {
+                        <input type="date" name="ToDate" class="form-control" value=@ViewBag.To.ToString("yyyy-MM-dd") required>
+                    }
+                    else
+                    {
+                        <input type="date" name="ToDate" class="form-control" required>
+                    }
+                </div>
+                <div class="col-md-2 col-sm-6 col-xs-12">
+                    Rooms:<select class="form-control" name="NumberOfRooms">
+                            @if (ViewBag.Rooms == 0 || ViewBag.Rooms == null){<option selected>0</option>} else{<option>0</option>}
+                            @if (ViewBag.Rooms == 1){<option selected>1</option>} else{<option>1</option>}
+                            @if (ViewBag.Rooms == 2){<option selected>2</option>}else{<option>2</option>}
+                            @if (ViewBag.Rooms == 3){<option selected>3</option>}else{<option>3</option>}
+                            @if (ViewBag.Rooms == 4){<option selected>4</option>}else{<option>4</option>}
+                            @if (ViewBag.Rooms == 5){<option selected>5</option>}else{<option>5</option>}
+                        </select>
+                </div>
+                <div class="col-md-2 col-sm-6 col-xs-12">
+                    <br> <input type="submit" value="Search" class="btn btn-default" onclick="Func()"/>
+                </div>
+            </div>
+    </form>
+    @if (ViewBag.Rooms != 0 && ViewBag.Rooms != null)
+    {
+        <div class="accomodation" style="width:auto;">
+            <h3>Choose category for room @{int a = ViewBag.Rooms - ViewBag.NumOfRooms + 1;}@a</h3>
+        </div>
+    }
+    <div style="margin-right:30px;">
+        @foreach (var item in Model)
+            {
+            <br>
+            <div class="col-md-5" style="margin:30px 50px;">
+                <h3>@Html.DisplayFor(modelItem => item.Title)</h3>             
+                    <img src="@Url.Content(item.Picture)" alt="Sample Photo" style="float:left; margin-right:10px;" />                
+                    @Html.DisplayFor(modelItem => item.Description)<br>
+                <h3>@Html.DisplayNameFor(model => model.Price)</h3>
+                    @Html.DisplayFor(modelItem => item.Price)<br>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a><br>
+                    <a asp-action="Reservation" asp-route-id="@item.Id">Reservation</a><br>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><br>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+    </div>
+        }
+    </div>
+    </div>

@@ -1,0 +1,79 @@
+@model NoNameHotel.Models.Category
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="content">
+    <h2>Edit categories</h2>
+
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+            <h4>Category</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Description" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <textarea name="textarea" style="width:300px;height:150px;"asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Picture" class="form-control" />
+                    <span asp-validation-for="Picture" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture2" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Picture2" class="form-control" />
+                    <span asp-validation-for="Picture2" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture3" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Picture3" class="form-control" />
+                    <span asp-validation-for="Picture3" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture4" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Picture4" class="form-control" />
+                    <span asp-validation-for="Picture4" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</div>

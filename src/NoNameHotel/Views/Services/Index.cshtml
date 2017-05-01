@@ -1,0 +1,35 @@
+@model IEnumerable<NoNameHotel.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="content">
+    <h2>Servicies</h2>
+
+    <p>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <a asp-action="Create">Create New</a>
+        }
+    </p>
+    <div style="margin-right:30px;">
+        @foreach (var item in Model)
+            {
+                <div class="col-md-5" style="margin:30px 40px;">
+                    <br><br>
+                    <a  style="color:rgb(102, 112, 122);">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a><br><br>
+                        <img src="@Url.Content(item.SmallPictureUrl)" alt="Sample Photo" style="float:left; margin-right:10px;" />
+                        @Html.DisplayFor(modelItem => item.ShortDescription)            
+                    <h3 style="margin-left:170px;">
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a><br>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id">Read more</a><br></h3>
+                </div>
+            }
+    </div>
+</div>

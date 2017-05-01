@@ -1,0 +1,34 @@
+@model NoNameHotel.Models.Service
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="content">
+    <h2>Details for services</h2>
+    <div>
+        <hr />
+        <h3><center>@Html.DisplayFor(model => model.Title)</center></h3>
+        <center>
+            <img class='gal' id="bigpic" src="@Url.Content(Model.PictureUrl)" alt="Sample Photo" height="400px"
+                 style="border:solid; border-width:4px; border-color:darkgray; border-radius:20px;"/><br><br>
+           <img  src="@Url.Content(Model.PictureUrl)" alt="Sample Photo" height="100px" onclick="myFunction()" />
+            <img src="@Url.Content(Model.PictureUrl2)" alt="Sample Photo" height="100px" onclick="myFunction()" />
+        </center>
+        <br>
+        @Html.DisplayFor(model => model.FullDescription)         
+    </div>
+    <div>
+        <br>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> <br>
+        }
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+<script>
+    function myFunction() {
+        var clickedImg = event.srcElement.src;
+        document.getElementById('bigpic').src = clickedImg;
+}
+</script>
